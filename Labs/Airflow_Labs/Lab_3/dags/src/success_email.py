@@ -6,12 +6,12 @@ from email.mime.multipart import MIMEMultipart
 from airflow.hooks.base import BaseHook
 
 def send_success_email(**kwargs):
-    conn = BaseHook.get_connection('email_smtp')
-    sender_email = conn.login
-    password = conn.password
-    # sender_email = Variable.get('EMAIL_USER')
-    # password = Variable.get('EMAIL_PASSWORD')
-    receiver_emails = 'your_email' # define receiver email
+    # conn = BaseHook.get_connection('email_smtp')
+    # sender_email = conn.login
+    # password = conn.password
+    sender_email = Variable.get('EMAIL_USER')
+    password = Variable.get('EMAIL_PASSWORD')
+    receiver_emails = 'aditya.ab@northeastern.edu' # define receiver email
 
     # Define subject and body templates
     subject_template = 'Airflow Success: {{ dag.dag_id }} - Data Pipeline tasks succeeded'

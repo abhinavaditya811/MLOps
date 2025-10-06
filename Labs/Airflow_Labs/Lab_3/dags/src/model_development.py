@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.compose import make_column_transformer
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import GridSearchCV
-from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier  # CHANGED: Import Random Forest instead
 
 # Load data from a CSV file
 def load_data():
@@ -15,7 +15,7 @@ def load_data():
     Returns:
         bytes: Serialized data.
     """
-    data = pd.read_csv("/home/mlops_fall_2024/advertising.csv")
+    data = pd.read_csv(os.path.join(os.path.dirname(__file__), "../data/advertising.csv"))
     return data
 
 # Preprocess the data
@@ -41,13 +41,13 @@ def data_preprocessing(data):
 
     return X_train, X_test, y_train.values, y_test.values
 
-# Build and save a logistic regression model
+# Build and save a Random Forest model  # CHANGED: Updated comment
 def build_model(data, filename):
     X_train, X_test, y_train, y_test = data
 
-    # Create and train a logistic regression model with the best parameters
-    lr_clf = LogisticRegression()
-    lr_clf.fit(X_train, y_train)
+    # Create and train a Random Forest model  # CHANGED: Updated comment
+    rf_clf = RandomForestClassifier(random_state=42, n_estimators=100)  # CHANGED: Use Random Forest
+    rf_clf.fit(X_train, y_train)
 
     # Ensure the directory exists
     output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), "model")
@@ -57,10 +57,15 @@ def build_model(data, filename):
     output_path = os.path.join(output_dir, filename)
     
     # Save the trained model to a file
-    pickle.dump(lr_clf, open(output_path, 'wb'))
+    pickle.dump(rf_clf, open(output_path, 'wb'))
+    
+    # ADDED: Print model performance for verification
+    train_score = rf_clf.score(X_train, y_train)
+    test_score = rf_clf.score(X_test, y_test)
+    print(f"Random Forest - Train accuracy: {train_score:.4f}, Test accuracy: {test_score:.4f}")
 
 
-# Load a saved logistic regression model and evaluate it
+# Load a saved Random Forest model and evaluate it  # CHANGED: Updated comment
 def load_model(data, filename):
     X_train, X_test, y_train, y_test = data
     output_path = os.path.join(os.path.dirname(__file__), "../model", filename)

@@ -70,4 +70,4 @@ task_send_email = PythonOperator(
 )
 
 # Set task dependencies
-load_data_task >> data_preprocessing_task >> separate_data_outputs_task >> build_save_model_task >> task_send_email
+load_data_task >> data_preprocessing_task >> separate_data_outputs_task >> build_save_model_task
