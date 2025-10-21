@@ -1,20 +1,14 @@
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 import tensorflow as tf
 import numpy as np
 
 app = Flask(__name__, static_folder='statics')
-
-# URL of your Flask API for making predictions
-api_url = 'http://0.0.0.0:4000/predict'  # Update with the actual URL
+CORS(app)  # Enable CORS for all routes
 
 # Load the TensorFlow model
-model = tf.keras.models.load_model('my_model.keras')  # Replace 'my_model.keras' with the actual model file
+model = tf.keras.models.load_model('my_model.keras')
 class_labels = ['Setosa', 'Versicolor', 'Virginica']
-
-
-"""Modern web apps use a technique named routing. This helps the user remember the URLs. 
-For instance, instead of having /booking.php they see /booking/. Instead of /account.asp?id=1234/ 
-they’d see /account/1234/."""
 
 @app.route('/')
 def home():
@@ -24,7 +18,12 @@ def home():
 def predict():
     if request.method == 'POST':
         try:
-            data = request.form
+            # Handle both JSON and form data
+            if request.is_json:
+                data = request.get_json()
+            else:
+                data = request.form.to_dict()
+
             sepal_length = float(data['sepal_length'])
             sepal_width = float(data['sepal_width'])
             petal_length = float(data['petal_length'])
@@ -36,7 +35,6 @@ def predict():
             predicted_class = class_labels[np.argmax(prediction)]
 
             # Return the predicted class in the response
-            # Use jsonify() instead of json.dumps() in Flask
             return jsonify({"predicted_class": predicted_class})
         except Exception as e:
             return jsonify({"error": str(e)})
@@ -46,4 +44,4 @@ def predict():
         return "Unsupported HTTP method"
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=4000)
+    app.run(debug=True, host='0.0.0.0', port=5000)
