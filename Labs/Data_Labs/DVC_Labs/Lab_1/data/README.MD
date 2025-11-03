@@ -2,6 +2,6 @@ I successfully set up a complete MLOps data versioning pipeline from scratch. Fi
 
 Once the configuration was solid, I executed the core DVC workflow. I used dvc add data/CC_GENERAL.csv to tell DVC to track my large dataset, which in turn created the small data/CC_GENERAL.csv.dvc pointer file. After fixing a small typo in the filename (.csv.dvc instead of _csv.dvc), I added this pointer file to Git with git add and saved this data version with git commit. Finally, I ran dvc push to upload the actual large data file to my Google Cloud Storage bucket and git push to save my code and data pointers to GitHub.
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/illgamerguy12/Desktop/Screenshot%202025-11-03%20at%205.11.21%E2%80%AFPM.png?version%3D1762209102827)
+![alt text](<Screenshot 2025-11-03 at 5.11.21 PM.png>)
 
-![alt text](https://file%2B.vscode-resource.vscode-cdn.net/Users/illgamerguy12/Desktop/Screenshot%202025-11-03%20at%205.11.48%E2%80%AFPM.png?version%3D1762209129682)
+![alt text](<Screenshot 2025-11-03 at 5.11.48 PM.png>)
