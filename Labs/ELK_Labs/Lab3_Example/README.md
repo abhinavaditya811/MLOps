@@ -50,3 +50,8 @@ The ingestion pipeline processes JSON objects with the following schema structur
 | `quantity` | `integer` | Number of units purchased |
 | `country` | `keyword` | Geolocation of the user (used for spatial analysis) |
 | `payment_method` | `keyword` | Transaction type (e.g., PayPal, Credit Card) |
+
+
+![alt text](<Screenshot 2025-11-17 at 9.56.50 PM.png>)
+
+![alt text](<Screenshot 2025-11-17 at 9.57.41 PM.png>)
